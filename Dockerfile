@@ -10,7 +10,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the application source after dependencies are installed.
-COPY main.py .
+COPY app/ app/
 
 # Create an unprivileged user and switch to it for runtime security.
 RUN groupadd --system appuser \
@@ -18,5 +18,5 @@ RUN groupadd --system appuser \
     && chown -R appuser:appuser /app
 USER appuser
 
-# Entrypoint: start the bot.
-CMD ["python", "main.py"]
+# Entrypoint: start the bot (mode is selected by USE_MEMORY from the environment).
+CMD ["python", "-m", "app.main"]
