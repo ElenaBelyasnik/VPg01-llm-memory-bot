@@ -1,0 +1,12 @@
+services:
+  base-bot:
+    build: .
+    env_file:
+      - .env
+    restart: unless-stopped
+    networks:
+      - telegram-bots-network
+
+networks:
+  telegram-bots-network:
+    driver: bridge
