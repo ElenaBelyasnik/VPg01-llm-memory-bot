@@ -13,8 +13,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY app/ app/
 
 # Create an unprivileged user and switch to it for runtime security.
+# Also create /app/data so the SQLite DB can be written there.
 RUN groupadd --system appuser \
-    && useradd --system --gid appuser --home-directory /app --shell /usr/sbin/nologin appuser \
+    && useradd --system --gid appuser -d /app --shell /usr/sbin/nologin appuser \
+    && mkdir -p /app/data \
+    && chown -R appuser:appuser /app/data \
     && chown -R appuser:appuser /app
 USER appuser
 

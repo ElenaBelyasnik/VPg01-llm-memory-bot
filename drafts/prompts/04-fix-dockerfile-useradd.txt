@@ -1,0 +1,21 @@
+04-fix-dockerfile-useradd.txt
+
+В процессе сборки Docker-образа возникла ошибка в Dockerfile: 
+`useradd: unrecognized option '--home-directory'`
+
+Причина: в образе python:3.11-slim (Debian) утилита useradd не поддерживает длинный флаг `--home-directory`. 
+
+ВАЖНО:
+1. Никаких коммитов и пушей в Git без моего прямого указания. Просто создавай/изменяй файлы.
+2. Перед изменением файла напиши, что именно ты собираешься сделать. После выполнения — кратко подтверди, что файл записан.
+3. Не трогай файлы, которые не просили трогать.
+
+Твоя задача:
+1. Открой файл `Dockerfile`.
+2. Найди строку с `useradd` (шаг создания непривилегированного пользователя).
+3. Замени флаг `--home-directory /app` на короткий флаг `-d /app` (или `--home-dir /app`).
+   Было:
+   `useradd --system --gid appuser --home-directory /app --shell /usr/sbin/nologin appuser`
+   Должно стать:
+   `useradd --system --gid appuser -d /app --shell /usr/sbin/nologin appuser`
+4. Сохрани файл. Ничего больше не меняй.
